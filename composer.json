@@ -1,0 +1,19 @@
+{
+  "name": "vladyslav_dobychin/15-puzzle",
+  "description": "15 Puzzle Game",
+  "type": "project",
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Puzzle\\": "src/"
+    }
+  },
+  "scripts": {
+    "play": "php play.php"
+  }
+}

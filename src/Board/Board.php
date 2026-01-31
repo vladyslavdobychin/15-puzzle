@@ -2,20 +2,17 @@
 
 namespace Puzzle\Board;
 
+use Puzzle\Board\ValueObjects\Position;
 use RuntimeException;
 
 class Board
 {
     private array $tiles;
 
-    public function __construct()
+    public function __construct(?array $tiles = null)
     {
-        $this->tiles = [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 15, null]
-        ];
+        TilesValidator::validate($tiles);
+        $this->tiles = $tiles ?? BoardConfig::SOLVED;
     }
 
     public function getTiles(): array

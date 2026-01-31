@@ -22,12 +22,14 @@ class Game
     public function start(): void
     {
         $showInitialPrompt = true;
+        $moveCount = 0;
 
+        // TODO: DO I need the while loop here? And in the Input?
         while (true) {
             $this->renderer->renderBoard($this->board);
 
             if ($this->board->isSolved()) {
-                $this->renderer->showWin();
+                $this->renderer->showWin($moveCount);
                 break;
             }
 
@@ -42,6 +44,8 @@ class Game
                 $this->renderer->showInvalidMove();
                 continue;
             }
+
+            $moveCount++;
 
             echo "\n";
         }

@@ -3,6 +3,7 @@
 namespace Puzzle\Renderer;
 
 use Puzzle\Board\Board;
+use Puzzle\Board\BoardConfig;
 
 class Renderer
 {
@@ -34,9 +35,9 @@ class Renderer
         echo $this->visualComponent->messageSeparator();
     }
 
-    public function showWin(): void
+    public function showWin($numberOfMoves): void
     {
-        $this->showMessage("IT'S A WIN!");
+        $this->showMessage("IT'S A WIN!\nNumber of moves - {$numberOfMoves}");
     }
 
     public function showInvalidMove(): void
@@ -46,7 +47,9 @@ class Renderer
 
     public function showInvalidTile(): void
     {
-        $this->showMessage("Invalid tile. Choose 1-15.");
+        $this->showMessage(
+            "Invalid tile. Choose a number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE
+        );
     }
 
 }

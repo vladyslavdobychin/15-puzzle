@@ -34,9 +34,9 @@ class Renderer
         echo $this->visualComponent->messageSeparator();
     }
 
-    public function showWin(): void
+    public function showWin($numberOfMoves): void
     {
-        $this->showMessage("IT'S A WIN!");
+        $this->showMessage("IT'S A WIN!\nNumber of moves - {$numberOfMoves}");
     }
 
     public function showInvalidMove(): void

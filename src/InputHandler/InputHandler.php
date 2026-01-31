@@ -9,6 +9,9 @@ class InputHandler
         while (true) {
             $input = trim(fgets(STDIN));
 
+            /*
+             * TODO: I'm rendering in two places, in renderer and here, but here I can't use logic for convenient displaying of components
+             */
             if (!is_numeric($input)) {
                 echo "+------------------------+\n";
                 echo "Invalid input. Please enter a number.\n";

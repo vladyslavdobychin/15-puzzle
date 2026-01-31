@@ -32,6 +32,15 @@ class BoardFactory {
     }
 
     /**
+     * Creates a board requiring two moves to be solved. May be used for testing of moves counter.
+     *
+     * @return Board
+     */
+    public function createTwoMovesAway(): Board {
+        return new Board(BoardConfig::TWO_MOVES_AWAY);
+    }
+
+    /**
      * Creates a board in a solved state, playing this board will immediately roll the end of the game message.
      *
      * @return Board

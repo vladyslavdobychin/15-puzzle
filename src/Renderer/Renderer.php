@@ -52,4 +52,11 @@ class Renderer
         );
     }
 
+    public function showInvalidInput(): void
+    {
+        $this->showMessage(
+            "Invalid input. Please enter a number."
+        );
+    }
+
 }

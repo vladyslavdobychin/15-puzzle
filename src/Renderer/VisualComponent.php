@@ -25,4 +25,14 @@ readonly class VisualComponent
         $display = $tile === null ? "  " : sprintf('%2d', $tile);
         return "| {$display} ";
     }
+
+    /**
+     * Empty space before and after the board
+     *
+     * @return string
+     */
+    public function emptySpace(): string
+    {
+        return "\n" . "\n";
+    }
 }

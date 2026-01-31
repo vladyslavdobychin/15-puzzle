@@ -12,7 +12,7 @@ use Puzzle\Renderer\VisualComponent;
 $boardFactory = new BoardFactory(new BoardShuffler());
 
 $game = new Game(
-    $boardFactory->createOneMoveAway(),
+    $boardFactory->createShuffled(),
     new Renderer(new VisualComponent()),
     new InputHandler()
 );

@@ -24,6 +24,7 @@ class Game
         $showInitialPrompt = true;
         $moveCount = 0;
 
+        // TODO: DO I need the while loop here? And in the Input?
         while (true) {
             $this->renderer->renderBoard($this->board);
 

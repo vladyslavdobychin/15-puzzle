@@ -1,6 +1,6 @@
 <?php
 
-namespace Puzzle\Board;
+namespace Puzzle\Board\ValueObjects;
 
 readonly class Position
 {

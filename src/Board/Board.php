@@ -2,6 +2,7 @@
 
 namespace Puzzle\Board;
 
+use Puzzle\Board\ValueObjects\Position;
 use RuntimeException;
 
 class Board
@@ -10,6 +11,7 @@ class Board
 
     public function __construct(?array $tiles = null)
     {
+        TilesValidator::validate($tiles);
         $this->tiles = $tiles ?? BoardConfig::SOLVED;
     }
 

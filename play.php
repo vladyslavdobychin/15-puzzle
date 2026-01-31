@@ -3,6 +3,7 @@
 require_once 'vendor/autoload.php';
 
 use Puzzle\Board\Board;
+use Puzzle\InputHandler\InputHandler;
 use Puzzle\Renderer\Renderer;
 use Puzzle\Renderer\VisualComponent;
 
@@ -10,6 +11,7 @@ $board = new Board();
 $renderer = new Renderer(
     new VisualComponent()
 );
+$inputHandler = new InputHandler();
 
 $showInitialPrompt = true;
 
@@ -25,21 +27,9 @@ while (true) {
         $renderer->showMessage("Enter tile number to move: ");
         $showInitialPrompt = false;
     }
-    $input = trim(fgets(STDIN));
+    $input = $inputHandler->getUserInput();
 
-    if (!is_numeric($input)) {
-        $renderer->showMessage("Invalid input. Please enter a number.");
-        continue;
-    }
-
-    $tile = (int) $input;
-
-    if ($tile < 1 || $tile > 15) {
-        $renderer->showInvalidTile();
-        continue;
-    }
-
-    if (!$board->moveTile($tile)) {
+    if (!$board->moveTile($input)) {
        $renderer->showInvalidMove();
         continue;
     }

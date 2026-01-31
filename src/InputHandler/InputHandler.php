@@ -2,6 +2,8 @@
 
 namespace Puzzle\InputHandler;
 
+use Puzzle\Board\BoardConfig;
+
 class InputHandler
 {
     public function getUserInput(): int
@@ -23,7 +25,7 @@ class InputHandler
 
             if ($tile < 1 || $tile > 15) {
                 echo "+------------------------+\n";
-                echo "Invalid tile. Choose 1-15.\n";
+                echo "Invalid tile. Choose a number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . "\n";
                 echo "+------------------------+\n";
                 continue;
             }

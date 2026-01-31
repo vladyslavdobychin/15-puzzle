@@ -3,6 +3,7 @@
 namespace Puzzle\Renderer;
 
 use Puzzle\Board\Board;
+use Puzzle\Board\BoardConfig;
 
 class Renderer
 {
@@ -46,7 +47,9 @@ class Renderer
 
     public function showInvalidTile(): void
     {
-        $this->showMessage("Invalid tile. Choose 1-15.");
+        $this->showMessage(
+            "Invalid tile. Choose a number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE
+        );
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Puzzle\Game;
 
 use Puzzle\Board\Board;
+use Puzzle\Board\BoardConfig;
 use Puzzle\InputHandler\InputHandler;
 use Puzzle\Renderer\Renderer;
 
@@ -19,12 +20,15 @@ class Game
         $this->inputHandler = $inputHandler;
     }
 
+    /**
+     * @return void
+     */
     public function start(): void
     {
         $showInitialPrompt = true;
         $moveCount = 0;
 
-        // TODO: DO I need the while loop here? And in the Input?
+        // TODO: DO I need the while loop here?
         while (true) {
             $this->renderer->renderBoard($this->board);
 
@@ -38,7 +42,7 @@ class Game
                 $showInitialPrompt = false;
             }
 
-            $tile = $this->inputHandler->getUserInput();
+            $tile = $this->getTileInput();
 
             if (!$this->board->moveTile($tile)) {
                 $this->renderer->showInvalidMove();
@@ -48,6 +52,30 @@ class Game
             $moveCount++;
 
             echo "\n";
+        }
+    }
+
+    /**
+     * @return int
+     */
+    private function getTileInput(): int
+    {
+        while (true) {
+            $input = $this->inputHandler->readLine();
+
+            if (!is_numeric($input)) {
+                $this->renderer->showInvalidInput();
+                continue;
+            }
+
+            $tile = (int)$input;
+
+            if ($tile < BoardConfig::MIN_TILE || $tile > BoardConfig::MAX_TILE) {
+                $this->renderer->showInvalidTile();
+                continue;
+            }
+
+            return $tile;
         }
     }
 }

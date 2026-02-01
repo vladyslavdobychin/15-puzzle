@@ -89,4 +89,19 @@ class Renderer
         $this->showMessage("Current move count: {$moveCount} {$plural}");
     }
 
+    public function showHomeMenu(bool $hasSave): void
+    {
+        echo "\n";
+        echo "╔════════════════════════════╗\n";
+        echo "║       15 PUZZLE GAME       ║\n";
+        echo "╚════════════════════════════╝\n";
+        echo "\n";
+        echo "1. New Game\n";
+        echo $hasSave ? "2. Continue Game\n" : "2. Continue Game (no save available)\n";
+        echo "3. Tutorial\n";
+        echo "4. Exit\n";
+        echo "\n";
+        echo "Enter your choice: ";
+    }
+
 }

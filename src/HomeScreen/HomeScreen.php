@@ -35,7 +35,7 @@ class HomeScreen
                 return $choice;
             }
 
-            $this->renderer->showMessage('Invalid input, pick an option between 1 and 4');
+            $this->renderer->showMessage('Invalid input');
         }
     }
 
@@ -47,22 +47,7 @@ class HomeScreen
     private function displayMenu(): void
     {
         $hasSave = $this->saveManager->exists();
-        //TODO: ugly
-        echo "\n";
-        echo "╔════════════════════════════╗\n";
-        echo "║       15 PUZZLE GAME       ║\n";
-        echo "╚════════════════════════════╝\n";
-        echo "\n";
-        echo "1. New Game\n";
-
-        if ($hasSave) {
-            echo "2. Continue Game\n";
-        }
-
-        echo "3. Tutorial\n";
-        echo "4. Exit\n";
-        echo "\n";
-        echo "Enter your choice: ";
+        $this->renderer->showHomeMenu($hasSave);
     }
 
     /**

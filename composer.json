@@ -13,7 +13,13 @@
       "Puzzle\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "scripts": {
-    "play": "php play.php"
+    "play": "php play.php",
+    "test": "phpunit"
   }
 }

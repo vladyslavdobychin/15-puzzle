@@ -90,15 +90,7 @@ class Board
 
     public function isSolved(): bool
     {
-        // TODO: replace with board config
-        $expected = [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 15, null]
-        ];
-
-        return $this->tiles === $expected;
+        return $this->tiles === BoardConfig::SOLVED;
     }
 
 }

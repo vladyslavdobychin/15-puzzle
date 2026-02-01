@@ -7,3 +7,11 @@ services:
     container_name: 15-puzzle-game
     volumes:
       - ./saves:/app/saves
+
+  test:
+    build: .
+    image: 15-puzzle:latest
+    container_name: 15-puzzle-test
+    command: vendor/bin/phpunit
+    volumes:
+      - ./:/app

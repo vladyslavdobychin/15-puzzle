@@ -4,9 +4,12 @@ namespace Puzzle\Input;
 
 readonly class ParsedInput
 {
+    public ?int $tileNumber;
+    public ?string $command;
+
     public function __construct(
-        public ?int $tileNumber = null,
-        public ?string $command = null
+        ?int $tileNumber = null,
+        ?string $command = null
     ) {
         if ($tileNumber === null && $command === null) {
             throw new \InvalidArgumentException("Either tile number or command must be provided");
@@ -15,6 +18,9 @@ readonly class ParsedInput
         if ($tileNumber !== null && $command !== null) {
             throw new \InvalidArgumentException("Cannot have both tile number and command");
         }
+
+        $this->tileNumber = $tileNumber;
+        $this->command = $command;
     }
 
     public function isTileMove(): bool

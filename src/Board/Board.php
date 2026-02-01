@@ -90,6 +90,7 @@ class Board
 
     public function isSolved(): bool
     {
+        // TODO: replace with board config
         $expected = [
             [1, 2, 3, 4],
             [5, 6, 7, 8],

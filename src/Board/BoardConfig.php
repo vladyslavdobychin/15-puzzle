@@ -2,7 +2,7 @@
 
 namespace Puzzle\Board;
 
-class BoardConfig
+readonly class BoardConfig
 {
     public const BOARD_SIZE = 4;
     public const MIN_TILE = 1;

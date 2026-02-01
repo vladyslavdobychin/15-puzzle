@@ -6,7 +6,8 @@ use Puzzle\Board\BoardFactory;
 use Puzzle\Board\BoardShuffler;
 use Puzzle\Game\Game;
 use Puzzle\Game\Tutorial;
-use Puzzle\InputHandler\InputHandler;
+use Puzzle\Input\InputHandler;
+use Puzzle\Input\InputParser;
 use Puzzle\Renderer\Renderer;
 use Puzzle\Renderer\VisualComponent;
 
@@ -14,6 +15,7 @@ $renderer = new Renderer(
     new VisualComponent()
 );
 $inputHandler = new InputHandler();
+$inputParser = new InputParser();
 $boardFactory = new BoardFactory(
     new BoardShuffler()
 );
@@ -31,7 +33,9 @@ if ($tutorial->shouldShow()) {
 $game = new Game(
     $boardFactory->createShuffled(),
     $renderer,
-    $inputHandler
+    $inputHandler,
+    $inputParser,
+    $boardFactory
 );
 
 $game->start();

@@ -3,7 +3,7 @@
 namespace Puzzle\Game;
 
 use Puzzle\Board\BoardFactory;
-use Puzzle\InputHandler\InputHandler;
+use Puzzle\Input\InputHandler;
 use Puzzle\Renderer\Renderer;
 
 class Tutorial

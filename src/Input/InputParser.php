@@ -15,7 +15,6 @@ class InputParser
     ];
 
     /**
-     * Parses user input and returns a ParsedInput object
      *
      * @param string $input
      * @return ParsedInput|null Returns null if input is invalid
@@ -42,8 +41,6 @@ class InputParser
     }
 
     /**
-     * Returns list of available commands
-     *
      * @return array
      */
     public function getAvailableCommands(): array

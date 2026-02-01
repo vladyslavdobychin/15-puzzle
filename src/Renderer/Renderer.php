@@ -55,7 +55,7 @@ class Renderer
     public function showInvalidInput(): void
     {
         $this->showMessage(
-            "Invalid input. Please enter a number."
+            "Invalid input. Input must be a valid number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " or a valid command."
         );
     }
 
@@ -70,7 +70,7 @@ class Renderer
             "  restart - Start a new game\n" .
             "  exit - Exit the game\n" .
             "  help - Show this help message\n" .
-            "  moves - Show current move count\n" .
+            "  moves - Show current move count\n\n" .
             "Or enter a tile number " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " to move it.";
 
         $this->showMessage($message);

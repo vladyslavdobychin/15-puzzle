@@ -32,6 +32,9 @@ class Game
         $this->boardFactory = $boardFactory;
     }
 
+    /**
+     * @return void
+     */
     public function start(): void
     {
         $showInitialPrompt = true;
@@ -77,8 +80,6 @@ class Game
     }
 
     /**
-     * Gets and parses player input
-     *
      * @return ParsedInput
      */
     private function getPlayerInput(): ParsedInput
@@ -97,8 +98,6 @@ class Game
     }
 
     /**
-     * Handles command execution
-     *
      * @param string $command
      * @param int $moveCount
      * @return bool Returns true if game should quit
@@ -107,7 +106,7 @@ class Game
     {
         switch ($command) {
             case InputCommand::RESTART:
-                $this->boardFactory->createShuffled();
+                $this->board = $this->boardFactory->createShuffled();
                 return false;
 
             case InputCommand::EXIT:

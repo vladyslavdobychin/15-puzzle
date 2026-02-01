@@ -16,6 +16,5 @@ Dockerfile
 .dockerignore
 docker-compose.yml
 
-tests/
-
 vendor/
+.phpunit.cache

@@ -11,7 +11,7 @@ WORKDIR /app
 
 COPY composer.json composer.lock* ./
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --optimize-autoloader --no-interaction
 
 # Copy application code
 COPY . .

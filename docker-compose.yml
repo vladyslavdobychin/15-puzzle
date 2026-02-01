@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  puzzle:
+    build: .
+    image: 15-puzzle:latest
+    stdin_open: true
+    tty: true
+    container_name: 15-puzzle-game

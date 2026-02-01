@@ -23,7 +23,6 @@ class Renderer
 
     public function renderBoard(Board $board): void
     {
-        // TODO: maybe I could render some sort of a frame not to make indents?
         echo $this->visualComponent->emptySpace();
         foreach ($board->getTiles() as $row) {
             foreach ($row as $tile) {

@@ -5,31 +5,40 @@ namespace Puzzle\Game;
 use Puzzle\Board\Board;
 use Puzzle\Board\BoardFactory;
 use Puzzle\Input\InputCommand;
-use Puzzle\Input\ParsedInput;
 use Puzzle\Input\InputHandler;
 use Puzzle\Input\InputParser;
+use Puzzle\Input\ValueObjects\ParsedInput;
+use Puzzle\Persistence\SaveManager;
 use Puzzle\Renderer\Renderer;
 
 class Game
 {
+    private bool $showInitialPrompt = true;
+    private int $moveCount;
     private Board $board;
     private Renderer $renderer;
     private InputHandler $inputHandler;
     private InputParser $inputParser;
     private BoardFactory $boardFactory;
+    private SaveManager $saveManager;
+
 
     public function __construct(
         Board $board,
         Renderer $renderer,
         InputHandler $inputHandler,
         InputParser $inputParser,
-        BoardFactory $boardFactory
+        BoardFactory $boardFactory,
+        SaveManager $saveManager,
+        int $moveCount = 0
     ) {
         $this->board = $board;
         $this->renderer = $renderer;
         $this->inputHandler = $inputHandler;
         $this->inputParser = $inputParser;
         $this->boardFactory = $boardFactory;
+        $this->saveManager = $saveManager;
+        $this->moveCount = $moveCount;
     }
 
     /**
@@ -37,33 +46,27 @@ class Game
      */
     public function start(): void
     {
-        $showInitialPrompt = true;
-        $moveCount = 0;
-
         while (true) {
             $this->renderer->renderBoard($this->board);
 
             if ($this->board->isSolved()) {
-                $this->renderer->showWin($moveCount);
+                $this->renderer->showWin($this->moveCount);
+                $this->saveManager->clear();
                 break;
             }
 
-            if ($showInitialPrompt) {
+            if ($this->showInitialPrompt) {
                 $this->renderer->showMessage("Enter tile number to move (or 'help' for commands): ");
-                $showInitialPrompt = false;
+                $this->showInitialPrompt = false;
             }
 
             $input = $this->getPlayerInput();
 
             if ($input->isCommand()) {
-                $shouldQuit = $this->handleCommand($input->command, $moveCount);
+                $shouldQuit = $this->handleCommand($input->command, $this->moveCount);
 
                 if ($shouldQuit) {
                     break;
-                }
-
-                if ($input->command === 'restart') {
-                    $moveCount = 0;
                 }
 
                 continue;
@@ -74,7 +77,8 @@ class Game
                 continue;
             }
 
-            $moveCount++;
+            $this->moveCount++;
+            $this->saveManager->save($this->board, $this->moveCount);
             echo "\n";
         }
     }
@@ -106,7 +110,7 @@ class Game
     {
         switch ($command) {
             case InputCommand::RESTART:
-                $this->board = $this->boardFactory->createShuffled();
+                $this->restart();
                 return false;
 
             case InputCommand::EXIT:
@@ -125,5 +129,16 @@ class Game
                 $this->renderer->showInvalidInput();
                 return false;
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function restart(): void
+    {
+        $this->renderer->showMessage("Starting a new game...");
+        $this->board = $this->boardFactory->createShuffled();
+        $this->moveCount = 0;
+        $this->saveManager->clear();
     }
 }

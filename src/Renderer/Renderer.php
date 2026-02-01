@@ -9,6 +9,13 @@ class Renderer
 {
     private VisualComponent $visualComponent;
 
+    /**
+     * Enables rendering of visual elements (tiles, borders) or messages. If the message could be considered
+     * an event that may happen in different contexts (Win message, Invalid input message), it is better to add
+     * a separate method to display this message (e.g. showInvalidInput())
+     *
+     * @param VisualComponent $visualComponent
+     */
     public function __construct(VisualComponent $visualComponent)
     {
         $this->visualComponent = $visualComponent;

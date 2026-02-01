@@ -3,7 +3,9 @@
 namespace Puzzle\Game;
 
 use Puzzle\Board\BoardFactory;
-use Puzzle\InputHandler\InputHandler;
+use Puzzle\Board\BoardShuffler;
+use Puzzle\Input\InputHandler;
+use Puzzle\Input\InputParser;
 use Puzzle\Renderer\Renderer;
 
 class Tutorial
@@ -55,7 +57,17 @@ class Tutorial
         );
 
         $tutorialBoard = $this->boardFactory->createOneMoveAway();
-        $tutorialGame = new Game($tutorialBoard, $this->renderer, $this->inputHandler);
+        $inputParser = new InputParser();
+        $boardFactory = new BoardFactory(
+            new BoardShuffler()
+        );
+        $tutorialGame = new Game(
+            $tutorialBoard,
+            $this->renderer,
+            $this->inputHandler,
+            $inputParser,
+            $boardFactory
+        );
         $tutorialGame->start();
 
         $this->renderer->showMessage(

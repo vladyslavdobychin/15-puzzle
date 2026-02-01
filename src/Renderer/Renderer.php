@@ -9,6 +9,13 @@ class Renderer
 {
     private VisualComponent $visualComponent;
 
+    /**
+     * Enables rendering of visual elements (tiles, borders) or messages. If the message could be considered
+     * an event that may happen in different contexts (Win message, Invalid input message), it is better to add
+     * a separate method to display this message (e.g. showInvalidInput())
+     *
+     * @param VisualComponent $visualComponent
+     */
     public function __construct(VisualComponent $visualComponent)
     {
         $this->visualComponent = $visualComponent;
@@ -16,7 +23,7 @@ class Renderer
 
     public function renderBoard(Board $board): void
     {
-        // TODO: Do maybe I could render some sort of a frame not to make indents?
+        // TODO: maybe I could render some sort of a frame not to make indents?
         echo $this->visualComponent->emptySpace();
         foreach ($board->getTiles() as $row) {
             foreach ($row as $tile) {
@@ -55,8 +62,31 @@ class Renderer
     public function showInvalidInput(): void
     {
         $this->showMessage(
-            "Invalid input. Please enter a number."
+            "Invalid input. Input must be a valid number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " or a valid command."
         );
+    }
+
+    public function showGoodbye(): void
+    {
+        $this->showMessage("Thanks for playing! Goodbye!");
+    }
+
+    public function showHelp(): void
+    {
+        $message = "Available commands:\n\n" .
+            "  restart - Start a new game\n" .
+            "  exit - Exit the game\n" .
+            "  help - Show this help message\n" .
+            "  moves - Show current move count\n\n" .
+            "Or enter a tile number " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " to move it.";
+
+        $this->showMessage($message);
+    }
+
+    public function showMoveCount(int $moveCount): void
+    {
+        $plural = $moveCount === 1 ? 'move' : 'moves';
+        $this->showMessage("Current move count: {$moveCount} {$plural}");
     }
 
 }

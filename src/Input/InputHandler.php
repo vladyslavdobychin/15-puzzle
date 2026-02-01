@@ -1,6 +1,6 @@
 <?php
 
-namespace Puzzle\InputHandler;
+namespace Puzzle\Input;
 
 use Puzzle\Board\BoardConfig;
 

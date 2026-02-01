@@ -3,8 +3,11 @@
 namespace Puzzle\Game;
 
 use Puzzle\Board\Board;
-use Puzzle\Board\BoardConfig;
-use Puzzle\InputHandler\InputHandler;
+use Puzzle\Board\BoardFactory;
+use Puzzle\Input\InputCommand;
+use Puzzle\Input\ParsedInput;
+use Puzzle\Input\InputHandler;
+use Puzzle\Input\InputParser;
 use Puzzle\Renderer\Renderer;
 
 class Game
@@ -12,12 +15,21 @@ class Game
     private Board $board;
     private Renderer $renderer;
     private InputHandler $inputHandler;
+    private InputParser $inputParser;
+    private BoardFactory $boardFactory;
 
-    public function __construct(Board $board, Renderer $renderer, InputHandler $inputHandler)
-    {
+    public function __construct(
+        Board $board,
+        Renderer $renderer,
+        InputHandler $inputHandler,
+        InputParser $inputParser,
+        BoardFactory $boardFactory
+    ) {
         $this->board = $board;
         $this->renderer = $renderer;
         $this->inputHandler = $inputHandler;
+        $this->inputParser = $inputParser;
+        $this->boardFactory = $boardFactory;
     }
 
     /**
@@ -28,7 +40,6 @@ class Game
         $showInitialPrompt = true;
         $moveCount = 0;
 
-        // TODO: DO I need the while loop here?
         while (true) {
             $this->renderer->renderBoard($this->board);
 
@@ -38,44 +49,81 @@ class Game
             }
 
             if ($showInitialPrompt) {
-                $this->renderer->showMessage("Enter tile number to move: ");
+                $this->renderer->showMessage("Enter tile number to move (or 'help' for commands): ");
                 $showInitialPrompt = false;
             }
 
-            $tile = $this->getTileInput();
+            $input = $this->getPlayerInput();
 
-            if (!$this->board->moveTile($tile)) {
+            if ($input->isCommand()) {
+                $shouldQuit = $this->handleCommand($input->command, $moveCount);
+
+                if ($shouldQuit) {
+                    break;
+                }
+
+                if ($input->command === 'restart') {
+                    $moveCount = 0;
+                }
+
+                continue;
+            }
+
+            if (!$this->board->moveTile($input->tileNumber)) {
                 $this->renderer->showInvalidMove();
                 continue;
             }
 
             $moveCount++;
-
             echo "\n";
         }
     }
 
     /**
-     * @return int
+     * @return ParsedInput
      */
-    private function getTileInput(): int
+    private function getPlayerInput(): ParsedInput
     {
         while (true) {
             $input = $this->inputHandler->readLine();
+            $parsed = $this->inputParser->parse($input);
 
-            if (!is_numeric($input)) {
+            if ($parsed === null) {
                 $this->renderer->showInvalidInput();
                 continue;
             }
 
-            $tile = (int)$input;
+            return $parsed;
+        }
+    }
 
-            if ($tile < BoardConfig::MIN_TILE || $tile > BoardConfig::MAX_TILE) {
-                $this->renderer->showInvalidTile();
-                continue;
-            }
+    /**
+     * @param string $command
+     * @param int $moveCount
+     * @return bool Returns true if game should quit
+     */
+    private function handleCommand(string $command, int $moveCount): bool
+    {
+        switch ($command) {
+            case InputCommand::RESTART:
+                $this->board = $this->boardFactory->createShuffled();
+                return false;
 
-            return $tile;
+            case InputCommand::EXIT:
+                $this->renderer->showGoodbye();
+                return true;
+
+            case InputCommand::HELP:
+                $this->renderer->showHelp();
+                return false;
+
+            case InputCommand::MOVES:
+                $this->renderer->showMoveCount($moveCount);
+                return false;
+
+            default:
+                $this->renderer->showInvalidInput();
+                return false;
         }
     }
 }

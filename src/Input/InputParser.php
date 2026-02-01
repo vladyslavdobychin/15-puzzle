@@ -11,7 +11,6 @@ class InputParser
         InputCommand::EXIT,
         InputCommand::HELP,
         InputCommand::MOVES,
-        InputCommand::HINT,
     ];
 
     /**

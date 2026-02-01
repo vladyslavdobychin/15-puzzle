@@ -8,5 +8,4 @@ readonly class InputCommand
     public const EXIT = 'exit';
     public const HELP = 'help';
     public const MOVES = 'moves';
-    public const HINT = 'hint';
 }

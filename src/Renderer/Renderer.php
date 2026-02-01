@@ -78,7 +78,7 @@ class Renderer
             "  exit - Exit the game\n" .
             "  help - Show this help message\n" .
             "  moves - Show current move count\n\n" .
-            "Or enter a tile number " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " to move it.";
+            "Or enter a tile number between " . BoardConfig::MIN_TILE . " and " . BoardConfig::MAX_TILE . " to move it.";
 
         $this->showMessage($message);
     }

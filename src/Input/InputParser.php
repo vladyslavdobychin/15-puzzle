@@ -3,6 +3,7 @@
 namespace Puzzle\Input;
 
 use Puzzle\Board\BoardConfig;
+use Puzzle\Input\ValueObjects\ParsedInput;
 
 class InputParser
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Puzzle\Input;
+namespace Puzzle\Input\ValueObjects;
 
 readonly class ParsedInput
 {

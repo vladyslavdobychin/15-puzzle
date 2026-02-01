@@ -6,6 +6,7 @@ use Puzzle\Board\BoardFactory;
 use Puzzle\Board\BoardShuffler;
 use Puzzle\Input\InputHandler;
 use Puzzle\Input\InputParser;
+use Puzzle\Persistence\SaveManager;
 use Puzzle\Renderer\Renderer;
 
 class Tutorial
@@ -61,18 +62,19 @@ class Tutorial
         $boardFactory = new BoardFactory(
             new BoardShuffler()
         );
+        $saveManager = new SaveManager();
         $tutorialGame = new Game(
             $tutorialBoard,
             $this->renderer,
             $this->inputHandler,
             $inputParser,
-            $boardFactory
+            $boardFactory,
+            $saveManager,
         );
         $tutorialGame->start();
 
         $this->renderer->showMessage(
-            "Great job! You've completed the tutorial.\n" .
-            "Now let's play the real game!"
+            "Great job! You've completed the tutorial.\n"
         );
     }
 }
